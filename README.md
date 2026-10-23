@@ -6,6 +6,16 @@ clipboard that follows the mouse between PCs.
 
 Windows only. Not affiliated with or endorsed by Rapoo.
 
+## Screenshots
+
+| DPI | Buttons |
+|---|---|
+| ![DPI](docs/screenshots/dpi.png) | ![Buttons](docs/screenshots/buttons.png) |
+| **Profiles** | **Flow** |
+| ![Profiles](docs/screenshots/profiles.png) | ![Flow](docs/screenshots/flow.png) |
+| **Performance** | **Settings** |
+| ![Performance](docs/screenshots/performance.png) | ![Settings](docs/screenshots/settings.png) |
+
 ## Features
 
 - **DPI**: see and switch DPI levels live as you press the DPI button.

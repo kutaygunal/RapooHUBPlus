@@ -225,7 +225,8 @@ class FlowCore:
         out.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         while self.running:
             msg = json.dumps({"t": "hello", "v": PROTOCOL, "id": self.id, "name": self.name,
-                              "port": self.service_port}).encode()
+                              "port": self.service_port,
+                              "discovery_port": self.discovery_port}).encode()
             for port in self.announce_ports:
                 try:
                     out.sendto(msg, (self.announce_host, port))
@@ -256,15 +257,17 @@ class FlowCore:
                     self._save()
             if new:
                 self.events.on_peers_changed()
-            # A directed reply lets the announcing PC discover us even when its broadcast
-            # doesn't reach this interface (common with VPNs and multi-adapter PCs).
+            # Announcements come from an ephemeral UDP source port. Reply to the sender's
+            # advertised listener port so it can discover us even if its broadcast is missed.
             if not msg.get("reply"):
                 reply = json.dumps({"t": "hello", "v": PROTOCOL, "id": self.id,
                                     "name": self.name, "port": self.service_port,
+                                    "discovery_port": self.discovery_port,
                                     "reply": True}).encode()
                 try:
-                    udp.sendto(reply, addr)
-                except OSError:
+                    reply_port = int(msg.get("discovery_port", DISCOVERY_PORT))
+                    udp.sendto(reply, (host, reply_port))
+                except (OSError, TypeError, ValueError):
                     pass
 
     def _expire(self):

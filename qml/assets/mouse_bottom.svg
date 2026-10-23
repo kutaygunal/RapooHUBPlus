@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 560">
+  <!-- Underside of the MT760, mirrored from mouse_top.svg so both views share one outline and scale. -->
+  <defs>
+    <radialGradient id="floor" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#000" stop-opacity="0.38"/>
+      <stop offset="0.6" stop-color="#000" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="shell" x1="0.85" y1="0" x2="0.15" y2="1">
+      <stop offset="0" stop-color="#eef0f3"/>
+      <stop offset="0.5" stop-color="#d3d7dd"/>
+      <stop offset="1" stop-color="#a7adb7"/>
+    </linearGradient>
+    <linearGradient id="base" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3b4048"/>
+      <stop offset="1" stop-color="#25292f"/>
+    </linearGradient>
+    <linearGradient id="foot" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4f5f7"/>
+      <stop offset="1" stop-color="#c9cdd3"/>
+    </linearGradient>
+    <linearGradient id="plate" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2e3238"/>
+      <stop offset="1" stop-color="#181b1f"/>
+    </linearGradient>
+    <radialGradient id="lens" cx="0.38" cy="0.35" r="0.65">
+      <stop offset="0" stop-color="#8a94a1"/>
+      <stop offset="0.45" stop-color="#2a3038"/>
+      <stop offset="1" stop-color="#07080a"/>
+    </radialGradient>
+    <radialGradient id="led" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ff4d4d"/>
+      <stop offset="1" stop-color="#7a1010"/>
+    </radialGradient>
+    <linearGradient id="btn" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fafbfc"/>
+      <stop offset="1" stop-color="#c7ccd3"/>
+    </linearGradient>
+    <linearGradient id="slider" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9ecf0"/>
+      <stop offset="1" stop-color="#aab0b9"/>
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="206" cy="300" rx="200" ry="262" fill="url(#floor)"/>
+
+  <!-- outer shell rim (mirror of the top outline: thumb side on the right) -->
+  <path fill="url(#shell)" stroke="#8f96a1" stroke-width="1.4"
+        d="M198 28 C120 26 68 86 54 176 C40 268 42 372 68 444 C90 506 140 540 206 540
+           C264 540 308 520 338 490 C370 458 394 424 394 382 C394 348 370 330 354 314
+           C350 290 348 252 340 214 C324 118 274 30 198 28 Z"/>
+
+  <!-- dark base plate, inset from the rim -->
+  <path fill="url(#base)"
+        d="M198 44 C130 42 86 96 72 180 C60 266 62 366 84 434 C104 490 148 522 206 522
+           C256 522 296 504 322 478 C350 450 372 420 372 384 C372 356 352 342 338 328
+           C332 300 330 258 324 222 C310 130 266 46 198 44 Z"/>
+  <path fill="none" stroke="#565d67" stroke-width="1.2"
+        d="M198 52 C136 50 94 100 80 182 C68 266 70 362 92 428 C110 482 152 512 206 512
+           C252 512 290 496 314 472 C340 446 362 418 362 386 C362 360 344 348 330 334"/>
+
+  <!-- USB-C port at the front edge -->
+  <rect x="184" y="30" width="44" height="14" rx="7" fill="#15181c" stroke="#5b626c"/>
+  <rect x="194" y="35" width="24" height="4" rx="2" fill="#4b525c"/>
+
+  <!-- glide feet (PTFE) -->
+  <path fill="url(#foot)" opacity="0.92"
+        d="M108 98 C150 66 252 64 300 94 C304 98 302 106 296 108 C252 84 158 86 116 112 C108 114 104 104 108 98 Z"/>
+  <path fill="url(#foot)" opacity="0.92"
+        d="M110 466 C158 506 258 506 312 466 C316 462 312 454 306 456 C254 488 166 490 118 456 C110 452 106 460 110 466 Z"/>
+  <rect x="80" y="246" width="12" height="82" rx="6" fill="url(#foot)" opacity="0.92"/>
+  <rect x="330" y="258" width="12" height="74" rx="6" fill="url(#foot)" opacity="0.92"/>
+
+  <!-- sensor island with PTFE ring -->
+  <rect x="140" y="170" width="140" height="214" rx="30" fill="url(#plate)" stroke="#5b626c" stroke-width="1.5"/>
+  <circle cx="210" cy="314" r="40" fill="none" stroke="url(#foot)" stroke-width="5" opacity="0.85"/>
+
+  <!-- power slider, mode/pair button, DIY button -->
+  <rect x="160" y="216" width="32" height="24" rx="12" fill="#15181c" stroke="#5b626c" stroke-width="1.5"/>
+  <rect x="163" y="219" width="16" height="18" rx="8" fill="url(#slider)"/>
+  <text x="176" y="254" text-anchor="middle" font-family="Segoe UI, Arial" font-size="8" fill="#8a919c">ON</text>
+  <circle cx="210" cy="228" r="12" fill="#15181c" stroke="#5b626c" stroke-width="1.5"/>
+  <rect x="204" y="222" width="12" height="12" rx="3" fill="#59616b"/>
+  <text x="210" y="254" text-anchor="middle" font-family="Segoe UI, Arial" font-size="8" fill="#8a919c">MODE</text>
+  <circle cx="244" cy="228" r="13" fill="url(#btn)" stroke="#9aa1ab" stroke-width="1.8"/>
+  <circle cx="244" cy="228" r="7" fill="none" stroke="#9aa1ab" stroke-width="1.2"/>
+  <text x="244" y="254" text-anchor="middle" font-family="Segoe UI, Arial" font-size="8" fill="#8a919c">DIY</text>
+
+  <!-- connection LEDs: 2.4G, BT1, BT2 -->
+  <g>
+    <circle cx="186" cy="264" r="3" fill="url(#led)"/>
+    <circle cx="210" cy="264" r="3" fill="#3a3f47"/>
+    <circle cx="234" cy="264" r="3" fill="#3a3f47"/>
+  </g>
+
+  <!-- optical sensor -->
+  <circle cx="210" cy="314" r="26" fill="#0d0f12" stroke="#4b525c" stroke-width="2"/>
+  <circle cx="210" cy="314" r="16" fill="url(#lens)"/>
+  <ellipse cx="204" cy="307" rx="5" ry="3" fill="#ffffff" opacity="0.3"/>
+
+  <!-- label plate -->
+  <text x="210" y="364" text-anchor="middle" font-family="Segoe UI, Arial" font-size="11" font-weight="600"
+        fill="#9aa1ab" letter-spacing="3">MT760</text>
+  <text x="210" y="377" text-anchor="middle" font-family="Segoe UI, Arial" font-size="7"
+        fill="#6b737e" letter-spacing="1">WIRELESS MOUSE</text>
+
+  <!-- screws -->
+  <g fill="#15181c" stroke="#5b626c">
+    <circle cx="134" cy="150" r="4"/><circle cx="286" cy="150" r="4"/><circle cx="210" cy="430" r="4"/>
+  </g>
+</svg>

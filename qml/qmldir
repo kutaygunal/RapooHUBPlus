@@ -1,0 +1,17 @@
+singleton Theme 1.0 Theme.qml
+Card 1.0 Card.qml
+Pill 1.0 Pill.qml
+IconButton 1.0 IconButton.qml
+Field 1.0 Field.qml
+Toggle 1.0 Toggle.qml
+Stepper 1.0 Stepper.qml
+MouseView 1.0 MouseView.qml
+ActionEditor 1.0 ActionEditor.qml
+DpiPage 1.0 DpiPage.qml
+ButtonsPage 1.0 ButtonsPage.qml
+PerformancePage 1.0 PerformancePage.qml
+ActivityPage 1.0 ActivityPage.qml
+SettingsPage 1.0 SettingsPage.qml
+Check 1.0 Check.qml
+ProfilesPage 1.0 ProfilesPage.qml
+FlowPage 1.0 FlowPage.qml

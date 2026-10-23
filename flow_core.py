@@ -190,15 +190,20 @@ class FlowCore:
     def start(self):
         if self.running:
             return
-        self.running = True
-        self._save()
         tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        tcp.bind(("", self.service_port))
-        tcp.listen(8)
         udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        udp.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        udp.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-        udp.bind(("", self.discovery_port))
+        try:
+            tcp.bind(("", self.service_port))
+            tcp.listen(8)
+            udp.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            udp.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+            udp.bind(("", self.discovery_port))
+            self._save()
+        except OSError:
+            tcp.close()
+            udp.close()
+            raise
+        self.running = True
         self.sockets = [tcp, udp]
         for target in (lambda: self._serve(tcp), lambda: self._listen(udp), self._announce):
             t = threading.Thread(target=target, daemon=True, name="flow")
@@ -233,12 +238,13 @@ class FlowCore:
     def _listen(self, udp):
         while self.running:
             try:
-                data, (host, _) = udp.recvfrom(2048)
+                data, addr = udp.recvfrom(2048)
                 msg = json.loads(data)
             except (OSError, ValueError):
                 continue
             if msg.get("t") != "hello" or msg.get("id") == self.id or msg.get("v") != PROTOCOL:
                 continue
+            host = addr[0]
             with self.lock:
                 new = msg["id"] not in self.discovered
                 self.discovered[msg["id"]] = {"name": str(msg.get("name", "?"))[:64], "host": host,
@@ -250,6 +256,16 @@ class FlowCore:
                     self._save()
             if new:
                 self.events.on_peers_changed()
+            # A directed reply lets the announcing PC discover us even when its broadcast
+            # doesn't reach this interface (common with VPNs and multi-adapter PCs).
+            if not msg.get("reply"):
+                reply = json.dumps({"t": "hello", "v": PROTOCOL, "id": self.id,
+                                    "name": self.name, "port": self.service_port,
+                                    "reply": True}).encode()
+                try:
+                    udp.sendto(reply, addr)
+                except OSError:
+                    pass
 
     def _expire(self):
         now = time.monotonic()
@@ -312,7 +328,17 @@ class FlowCore:
                 raise ValueError("unexpected reply")
             self._pair_finish(sock, priv, reply, initiator=True)
         except Exception as e:
-            self.events.on_pair_result(peer_id, False, f"Pairing failed: {e}")
+            if isinstance(e, (TimeoutError, socket.timeout)):
+                msg = ("No response from the other PC. Check that MT760 Hub is open with Flow on, "
+                       "and allow it through Windows Firewall (TCP port 47761).")
+            else:
+                msg = f"Pairing failed: {e}"
+            self.events.on_pair_result(peer_id, False, msg)
+        finally:
+            try:
+                sock.close()
+            except (OSError, UnboundLocalError):
+                pass
 
     def _pair_respond(self, sock, addr):
         sock.settimeout(PAIR_TIMEOUT_S)

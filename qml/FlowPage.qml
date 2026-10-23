@@ -37,7 +37,7 @@ Item {
                     Toggle {
                         width: parent.width
                         text: "Turn on Flow on this PC"
-                        hint: "This PC is “" + FlowSync.thisName + "”. Windows may ask to allow network access the first time."
+                        hint: "This PC is “" + FlowSync.thisName + "”. Keep both PCs on the same network and allow MT760 Hub through Windows Firewall."
                         checked: FlowSync.enabled
                         onToggled: (on) => FlowSync.setEnabled(on)
                     }
@@ -57,7 +57,7 @@ Item {
                             lineHeight: 1.25
                             text: "1. Copy text, an image or files on this PC.\n"
                                   + "2. Switch the mouse to the other PC's channel.\n"
-                                  + "3. Paste there. Both PCs need Flow on, the same network, and one-time pairing."
+                                  + "3. Paste there. Both PCs need Flow on, the same network, and one-time pairing. Allow MT760 Hub through Windows Firewall if pairing times out."
                         }
                     }
                 }
@@ -177,7 +177,12 @@ Item {
                             Text { text: modelData.host; color: Theme.textDim; font.family: Theme.fontFamily; font.pixelSize: 11 }
                         }
                         Pill { anchors.right: parent.right; anchors.rightMargin: 12; anchors.verticalCenter: parent.verticalCenter
-                               height: 32; fontSize: 12; text: "Pair"; checked: true; onClicked: FlowSync.pair(modelData.id) }
+                               height: 32; fontSize: 12
+                               text: FlowSync.pairing.id === modelData.id && FlowSync.pairing.connecting
+                                     ? "Connecting..." : "Pair"
+                               checked: !(FlowSync.pairing.id === modelData.id && FlowSync.pairing.connecting)
+                               enabledLook: !(FlowSync.pairing.id === modelData.id && FlowSync.pairing.connecting)
+                               onClicked: FlowSync.pair(modelData.id) }
                     }
                 }
                 Text {

@@ -30,6 +30,10 @@ Windows only. Not affiliated with or endorsed by Rapoo.
   - Carries text, images and files.
   - Sent over the local network, end-to-end encrypted, after a one-time pairing with a 6-digit
     code compared on both PCs.
+  - Both PCs must be on the same local network and MT760 Hub must be allowed through Windows
+    Firewall on both PCs. Flow discovery uses UDP port 47760 and pairing/transfers use TCP port
+    47761. If a PC appears only on one side or pairing times out, allow MT760 Hub on the active
+    network profile and check that the Wi-Fi network does not isolate connected devices.
 - **Performance**: polling rate, plus Windows scroll lines and pointer speed.
 - Battery, firmware version, tray icon, start with Windows, dark and light themes.
 

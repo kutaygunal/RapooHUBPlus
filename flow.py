@@ -168,6 +168,11 @@ class Flow(QObject):
     # -- pairing --------------------------------------------------------------------------------
     @Slot(str)
     def pair(self, peer_id):
+        peer = next((p for p in self._nearby() if p["id"] == peer_id), None)
+        if peer:
+            self._pairing = {"id": peer_id, "name": peer["name"], "connecting": True}
+            self.pairingChanged.emit()
+            self._note(f"Flow: connecting to {peer['name']}…")
         self.core.pair_with(peer_id)
 
     @Slot(str)
@@ -183,7 +188,7 @@ class Flow(QObject):
 
     def _on_pair_request(self, peer_id, name, code, initiator):
         self._pairing = {"id": peer_id, "name": name, "code": f"{code[:3]} {code[3:]}",
-                         "initiator": initiator, "answered": False}
+                         "initiator": initiator, "answered": False, "connecting": False}
         self.pairingChanged.emit()
 
     def _on_pair_result(self, peer_id, ok, msg):
